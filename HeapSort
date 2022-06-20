@@ -1,0 +1,55 @@
+func heapSort(_ nums: [Int]) -> [Int] {
+    
+    
+    var sorted = [Int]()
+    sorted.append(nums[0])
+    var result = [Int]()
+    
+    for i in 1..<nums.count {
+        var j = i
+        sorted.append(nums[i])
+        
+        while (j > 0) {
+            let pIdx = Int((Float(j)/2).rounded(.up) - 1)
+            if sorted[j] < sorted[pIdx] {
+                sorted.swapAt(j, pIdx)
+                j = pIdx
+            } else {
+                break
+            }
+        }
+        
+    }
+    // Reheapify
+    for i in 0..<sorted.count {
+        if sorted.count != 2 {
+            sorted.swapAt(0, sorted.count-1)
+        }
+        result.append(sorted.removeLast())
+        var j = 0
+        print("i: \(i)")
+        print(sorted)
+        
+        
+        while ((2*j) + 1 < sorted.count && (2*j) + 2 < sorted.count) {
+            print("sorted in while: \(sorted)")
+            let left = sorted[(2*j) + 1]
+            let right = sorted[(2*j) + 2]
+            
+            if sorted[j] > left || sorted[j] > right {
+                if left < right {
+                    sorted.swapAt(j, (2*j) + 1)
+                    j = (2*j) + 1
+                } else if right < left {
+                    sorted.swapAt(j, (2*j) + 2)
+                    j = (2*j) + 2
+                }
+                print("sorted in while: \(sorted)")
+            } else {
+                break
+            }
+        }
+    }
+    
+    return result
+}
